@@ -1,4 +1,5 @@
 import 'package:app_features/splash_page.dart';
+import 'package:app_features/updet.dart';
 import 'package:flutter/material.dart';
 
 import 'detail_page.dart';

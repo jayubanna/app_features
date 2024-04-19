@@ -13,52 +13,24 @@ class Detailpage extends StatefulWidget {
 
 class _DetailpageState extends State<Detailpage> {
   GlobalKey<FormState> fKey = GlobalKey<FormState>();
-  bool isVisible = true;
   File? img;
-
-  late TextEditingController nameController;
-  late TextEditingController gridController;
-  late TextEditingController stdController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController();
-    gridController = TextEditingController();
-    stdController = TextEditingController();
-  }
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController gridcontroller = TextEditingController();
+  TextEditingController stdcontroller = TextEditingController();
 
   @override
-  void dispose() {
-    // Dispose of controllers
-    nameController.dispose();
-    gridController.dispose();
-    stdController.dispose();
-    super.dispose();
-  }
+  @override
 
-  void saveData() {
-    if (fKey.currentState!.validate()) {
-      String name = nameController.text;
-      String grid = gridController.text;
-      String std = stdController.text;
+  void saveData(BuildContext context) {
+    if (img != null) {
+      StudentData studentData = StudentData(
+        grId: gridcontroller.text,
+        name: namecontroller.text,
+        std: stdcontroller.text,
+        image: img!,
+      );
 
-      if (name.isNotEmpty && grid.isNotEmpty && std.isNotEmpty && img != null) {
-        // Do something with the data
-        // For example, add it to a list
-        Map<String, String> data = {
-          'name': name,
-          'grid': grid,
-          'std': std,
-          'imgPath': img!.path,
-        };
-        Modal.g1.studentList.add(data);
-
-        // Then, you can navigate back to the previous screen
-        Navigator.pop(context);
-      } else {
-        print('Please fill in all fields and select an image.');
-      }
+      Navigator.pop(context, studentData);
     }
   }
 
@@ -113,7 +85,8 @@ class _DetailpageState extends State<Detailpage> {
             Center(
               child: InkWell(
                 onTap: () async {
-                  XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  XFile? file = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
                   if (file != null) {
                     setState(() {
                       img = File(file.path);
@@ -143,7 +116,8 @@ class _DetailpageState extends State<Detailpage> {
                     ),
                     Text(
                       "Student Data Add",
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 30, right: 30),
@@ -152,7 +126,7 @@ class _DetailpageState extends State<Detailpage> {
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
-                        controller: nameController,
+                        controller: namecontroller,
                         decoration: InputDecoration(
                           labelText: "Name",
                           labelStyle: TextStyle(fontSize: 20),
@@ -171,7 +145,7 @@ class _DetailpageState extends State<Detailpage> {
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
-                        controller: gridController,
+                        controller: gridcontroller,
                         decoration: InputDecoration(
                           labelText: "Grid",
                           labelStyle: TextStyle(fontSize: 20),
@@ -190,7 +164,7 @@ class _DetailpageState extends State<Detailpage> {
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
-                        controller: stdController,
+                        controller: stdcontroller,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: "Standard",
@@ -238,15 +212,16 @@ class _DetailpageState extends State<Detailpage> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 60,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.blue,
-                              ),
-                              child: InkWell(
-                                onTap: saveData,
+                            InkWell(
+                              onTap: () {
+                                saveData(context);                               },
+                              child: Container(
+                                height: 60,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.blue,
+                                ),
                                 child: Center(
                                   child: Text(
                                     "Save",
@@ -274,15 +249,15 @@ class _DetailpageState extends State<Detailpage> {
   }
 
   void clearData() {
-    nameController.clear();
-    gridController.clear();
-    stdController.clear();
+    namecontroller.clear();
+    gridcontroller.clear();
+    stdcontroller.clear();
   }
 
   void clearImageData() {
-    nameController.clear();
-    gridController.clear();
-    stdController.clear();
+    namecontroller.clear();
+    gridcontroller.clear();
+    stdcontroller.clear();
     setState(() {
       img = null;
     });

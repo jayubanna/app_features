@@ -134,8 +134,8 @@ class _DetailpageState extends State<Detailpage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
+                        validator: (val) {
+                          if (val!.isEmpty) {
                             return 'Please enter a name';
                           }
                           return null;
@@ -153,11 +153,12 @@ class _DetailpageState extends State<Detailpage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a grid';
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Please Enter your Name";
+                          } else {
+                            return null;
                           }
-                          return null;
                         },
                       ),
                     ),
@@ -173,8 +174,8 @@ class _DetailpageState extends State<Detailpage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
+                        validator: (val) {
+                          if (val!.isEmpty) {
                             return 'Please enter a standard';
                           }
                           return null;

@@ -17,22 +17,10 @@ class _DetailpageState extends State<Detailpage> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController gridcontroller = TextEditingController();
   TextEditingController stdcontroller = TextEditingController();
+  bool isValid=false;
 
   @override
   @override
-
-  void saveData(BuildContext context) {
-    if (img != null) {
-      StudentData studentData = StudentData(
-        grId: gridcontroller.text,
-        name: namecontroller.text,
-        std: stdcontroller.text,
-        image: img!,
-      );
-
-      Navigator.pop(context, studentData);
-    }
-  }
 
   void resetData() {
     showDialog(
@@ -215,7 +203,20 @@ class _DetailpageState extends State<Detailpage> {
                             ),
                             InkWell(
                               onTap: () {
-                                saveData(context);                               },
+                                bool isValid =
+                                    fKey.currentState?.validate() ?? false;
+                                if (img != null) {
+                                  StudentData studentData = StudentData(
+                                    grId: gridcontroller.text,
+                                    name: namecontroller.text,
+                                    std: stdcontroller.text,
+                                    image: img!,
+                                  );
+                                  fKey.currentState?.save();
+                                  Navigator.pop(context, studentData);
+                                  setState(() {});
+                                };
+                              },
                               child: Container(
                                 height: 60,
                                 width: 150,

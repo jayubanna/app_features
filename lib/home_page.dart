@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-
+                  Navigator.pushNamed(context, "detail_page");
                 },
                 child: Container(
                   height: 70,
